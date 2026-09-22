@@ -1,0 +1,6 @@
+{
+  "packages": {
+    "idempotency-api": { "release-type": "simple" },
+    "idempotency-spring-boot-starter": { "release-type": "simple" }
+  }
+}
