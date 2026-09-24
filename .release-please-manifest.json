@@ -1,4 +1,4 @@
 {
-  "idempotency-api": "1.0.0",
-  "idempotency-spring-boot-starter": "1.0.0"
+  "idempotency-api": "2.0.0",
+  "idempotency-spring-boot-starter": "2.0.0"
 }
