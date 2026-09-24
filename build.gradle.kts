@@ -1,6 +1,6 @@
 plugins {
     java
-    id("org.sonarqube") version "7.5.0.8588"
+    alias(libs.plugins.sonarqube)
 }
 
 sonar {
@@ -15,7 +15,9 @@ sonar {
         plugins.apply("java")
         plugins.apply("java-library")
         group = "com.hungvers.idempotency"
-        version = "0.0.1"
+        version = providers.environmentVariable("RELEASE_VERSION")
+            .orElse(providers.gradleProperty("version"))
+            .getOrElse("0.0.1")
 
         repositories { mavenCentral() }
 

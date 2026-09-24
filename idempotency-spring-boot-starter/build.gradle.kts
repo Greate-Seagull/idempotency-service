@@ -1,12 +1,12 @@
 plugins {
-    id("io.spring.dependency-management") version "1.1.7"
+    alias(libs.plugins.spring.dependency.management)
     id("maven-publish")
     id("jacoco")
 }
 
 dependencyManagement {
     imports {
-        mavenBom("org.springframework.boot:spring-boot-dependencies:4.1.1")
+        mavenBom(libs.spring.boot.dependencies.get().toString())
     }
 }
 

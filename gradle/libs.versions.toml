@@ -1,5 +1,15 @@
 [versions]
 spring-retry = "2.0.13"
+sonarqube = "7.5.0.8588"
+spring-boot = "4.1.1"
+dependency-management = "1.1.7"
+junit = "6.0.0"
 
 [libraries]
+junit-bom = { module = "org.junit:junit-bom", version.ref = "junit" }
 spring-retry = { module = "org.springframework.retry:spring-retry", version.ref = "spring-retry" }
+spring-boot-dependencies = { module = "org.springframework.boot:spring-boot-dependencies", version.ref = "spring-boot" }
+
+[plugins]
+sonarqube = { id = "org.sonarqube", version.ref = "sonarqube" }
+spring-dependency-management = { id = "io.spring.dependency-management", version.ref = "dependency-management" }

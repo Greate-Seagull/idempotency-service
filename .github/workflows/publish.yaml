@@ -20,5 +20,6 @@ jobs:
       - run: ./gradlew build test
       - run: ./gradlew publish
         env:
+          RELEASE_VERSION: ${{ env.RELEASE_VERSION }}
           GITHUB_ACTOR: ${{ github.actor }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
