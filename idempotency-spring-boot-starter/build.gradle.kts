@@ -2,6 +2,7 @@ plugins {
     id("org.springframework.boot") version "4.1.1"
     id("io.spring.dependency-management") version "1.1.7"
     id("maven-publish")
+    id("jacoco")
 }
 
 configurations {
@@ -32,6 +33,32 @@ dependencies {
 
 tasks.test {
     useJUnitPlatform()
+    finalizedBy(tasks.jacocoTestReport)
+}
+
+tasks.jacocoTestReport {
+    // Yêu cầu task test phải chạy trước khi tạo report
+    dependsOn(tasks.test)
+
+    reports {
+        xml.required.set(true) // BẮT BUỘC: SonarCloud đọc coverage qua file XML
+        html.required.set(true) // Giúp bạn mở trang HTML ở local xem chi tiết dòng nào chưa test
+        csv.required.set(false)
+    }
+
+    // Loại bỏ các class không cần thiết khỏi báo cáo test (Ví dụ: DTO, Configuration, Lombok generated code)
+    classDirectories.setFrom(
+        files(classDirectories.files.map {
+            fileTree(it) {
+                exclude(
+                    "**/config/**",
+                    "**/entity/**",
+                    "**/dto/**",
+                    "**/*Application.*"
+                )
+            }
+        })
+    )
 }
 
 publishing {
