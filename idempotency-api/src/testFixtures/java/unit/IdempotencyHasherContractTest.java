@@ -1,7 +1,7 @@
 package unit;
 
+import com.hungvers.idempotency.api.service.port.IdempotencyHasher;
 import org.junit.jupiter.api.Test;
-import service.port.IdempotencyHasher;
 
 import java.math.BigDecimal;
 import java.util.LinkedHashMap;
