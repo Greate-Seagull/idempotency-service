@@ -17,8 +17,25 @@ jobs:
         with:
           java-version: "21"
           distribution: "temurin"
-      - run: ./gradlew build test
-      - run: ./gradlew publish
+
+      - name: Extract version
+        run: |
+          if [ "${{ github.event_name }}" == "release" ]; then
+            TAG="${{ github.event.release.tag_name }}"
+          else
+            TAG=$(gh release view --json tagName -q .tagName)
+          fi
+          echo "RELEASE_VERSION=${TAG#v}" >> $GITHUB_ENV
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Test
+        run: ./gradlew build test
+        env:
+          RELEASE_VERSION: ${{ env.RELEASE_VERSION }}
+
+      - name: Publish
+        run: ./gradlew publish
         env:
           RELEASE_VERSION: ${{ env.RELEASE_VERSION }}
           GITHUB_ACTOR: ${{ github.actor }}
