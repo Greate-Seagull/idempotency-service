@@ -4,16 +4,27 @@ plugins {
     id("maven-publish")
 }
 
+configurations {
+    testCompileOnly.get().extendsFrom(compileOnly.get())
+    testAnnotationProcessor.get().extendsFrom(annotationProcessor.get())
+}
+
 dependencies {
+    // Module dependencies
     api(project(":idempotency-api"))
+
+    // Compile-time only (applies to both main and test via extendsFrom above)
     compileOnly("org.projectlombok:lombok")
     annotationProcessor("org.projectlombok:lombok")
+
+    // Runtime implementation
     implementation("org.springframework.boot:spring-boot-starter-data-redis")
     implementation("org.springframework.boot:spring-boot-autoconfigure")
     implementation("tools.jackson.core:jackson-databind")
+    implementation(libs.spring.retry)
+
+    // Test
     testImplementation(testFixtures(project(":idempotency-api")))
-    testCompileOnly("org.projectlombok:lombok")
-    testAnnotationProcessor("org.projectlombok:lombok")
     testImplementation("org.springframework.boot:spring-boot-starter-data-redis-test")
     testImplementation("org.testcontainers:testcontainers-junit-jupiter")
     testImplementation("com.redis:testcontainers-redis")
