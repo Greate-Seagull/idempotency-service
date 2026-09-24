@@ -2,7 +2,7 @@
 
 ## 1. Overview
 - Vấn đề giải quyết: đảm bảo request trùng lặp không thực thi side-effect nhiều lần
-- Phạm vi: các module con (`api`, `spring-boot-starter`)
+- Phạm vi: các module con (`api`, `starter`)
 
 ## 2. Core Mechanism
 - Interaction flow

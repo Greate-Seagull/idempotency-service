@@ -1,15 +1,17 @@
 package integration;
 
-import exception.ConnectionException;
-import exception.IdempotencyConflictException;
-import exception.RequestNotCompletedException;
+import com.hungvers.idempotency.api.exception.ConnectionException;
+import com.hungvers.idempotency.api.exception.IdempotencyConflictException;
+import com.hungvers.idempotency.api.model.failure.FailureMode;
+import com.hungvers.idempotency.api.model.task.LazyTask;
+import com.hungvers.idempotency.api.service.ClaimFailureIdempotencyHandler;
+import com.hungvers.idempotency.api.service.IdempotencyService;
+import com.hungvers.idempotency.api.service.port.Logger;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 import lombok.experimental.Accessors;
-import model.failure.FailureMode;
-import model.task.LazyTask;
 import org.assertj.core.api.ThrowableAssert;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -18,20 +20,18 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.context.annotation.ComponentScan;
-import service.ClaimFailureIdempotencyHandler;
-import service.IdempotencyService;
-import service.port.Logger;
 
 import java.util.ArrayList;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
-import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.doThrow;
+import static org.mockito.Mockito.mock;
 
 @SpringBootTest
 class ClaimFailureIdempotencyHandlerIT {
     @SpringBootApplication
-    @ComponentScan(basePackages = "components")
+    @ComponentScan(basePackages = "com/hungvers/idempotency/starter")
     public static class TestConfig {}
 
     private final ClaimFailureIdempotencyHandler handler;
