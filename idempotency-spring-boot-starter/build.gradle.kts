@@ -1,8 +1,13 @@
 plugins {
-    id("org.springframework.boot") version "4.1.1"
     id("io.spring.dependency-management") version "1.1.7"
     id("maven-publish")
     id("jacoco")
+}
+
+dependencyManagement {
+    imports {
+        mavenBom("org.springframework.boot:spring-boot-dependencies:4.1.1")
+    }
 }
 
 configurations {
@@ -29,6 +34,7 @@ dependencies {
     testImplementation("org.springframework.boot:spring-boot-starter-data-redis-test")
     testImplementation("org.testcontainers:testcontainers-junit-jupiter")
     testImplementation("com.redis:testcontainers-redis")
+    testRuntimeOnly("org.junit.platform:junit-platform-launcher")
 }
 
 tasks.test {
