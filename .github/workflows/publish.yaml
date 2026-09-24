@@ -25,6 +25,11 @@ jobs:
           else
             TAG=$(gh release view --json tagName -q .tagName)
           fi
+          echo "Resolved tag: $TAG"
+          if [ -z "$TAG" ]; then
+            echo "::error::Không lấy được tag"
+            exit 1
+          fi
           echo "RELEASE_VERSION=${TAG#v}" >> $GITHUB_ENV
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
