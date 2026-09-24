@@ -11,22 +11,22 @@ sonar {
     }
 }
 
-    subprojects {
-        plugins.apply("java")
-        plugins.apply("java-library")
-        group = "com.hungvers.idempotency"
-        version = providers.environmentVariable("RELEASE_VERSION")
-            .orElse(providers.gradleProperty("version"))
-            .getOrElse("0.0.1")
+subprojects {
+    plugins.apply("java")
+    plugins.apply("java-library")
+    group = "com.hungvers.idempotency"
+    version = providers.environmentVariable("RELEASE_VERSION")
+        .orElse(providers.gradleProperty("version"))
+        .getOrElse("0.0.1")
 
-        repositories { mavenCentral() }
+    repositories { mavenCentral() }
 
-        java {
-            sourceCompatibility = JavaVersion.VERSION_21
-            targetCompatibility = JavaVersion.VERSION_21
-        }
-
-        dependencyLocking {
-            lockAllConfigurations()
-        }
+    java {
+        sourceCompatibility = JavaVersion.VERSION_21
+        targetCompatibility = JavaVersion.VERSION_21
     }
+
+    dependencyLocking {
+        lockAllConfigurations()
+    }
+}
