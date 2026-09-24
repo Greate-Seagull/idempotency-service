@@ -1,0 +1,5 @@
+[versions]
+spring-retry = "2.0.13"
+
+[libraries]
+spring-retry = { module = "org.springframework.retry:spring-retry", version.ref = "spring-retry" }

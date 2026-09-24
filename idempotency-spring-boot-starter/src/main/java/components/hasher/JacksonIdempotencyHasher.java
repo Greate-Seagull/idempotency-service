@@ -1,6 +1,6 @@
 package components.hasher;
 
-import components.exception.ConnectionException;
+import exception.ConnectionException;
 import org.springframework.stereotype.Component;
 import service.port.IdempotencyHasher;
 import tools.jackson.databind.MapperFeature;
@@ -16,7 +16,7 @@ import java.util.HexFormat;
 
 @Component
 public class JacksonIdempotencyHasher implements IdempotencyHasher {
-    private final ObjectMapper MAPPER = JsonMapper.builder()
+    private final ObjectMapper mapper = JsonMapper.builder()
             .enable(MapperFeature.SORT_PROPERTIES_ALPHABETICALLY)
             .enable(SerializationFeature.ORDER_MAP_ENTRIES_BY_KEYS)
             .addModule(new SimpleModule()
@@ -28,7 +28,7 @@ public class JacksonIdempotencyHasher implements IdempotencyHasher {
     public String hash(Object payload) {
         try {
             MessageDigest digest = MessageDigest.getInstance("SHA-256");
-            byte[] hash = digest.digest(MAPPER.writeValueAsBytes(payload));
+            byte[] hash = digest.digest(mapper.writeValueAsBytes(payload));
             return HexFormat.of().formatHex(hash);
         } catch (NoSuchAlgorithmException e) {
             throw new ConnectionException(e);
